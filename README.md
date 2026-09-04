@@ -1,9 +1,9 @@
-# raceus.co.il
+# portfolio.raceus.co.il
 
 A personal portfolio built as a faithful replica of the [Claude Code](https://claude.com/claude-code)
 terminal UI. One self-contained HTML file: no build step, no dependencies, no framework.
 
-**Live:** https://raceus.co.il
+**Live:** https://portfolio.raceus.co.il
 
 ## What it does
 
@@ -53,11 +53,19 @@ working — hiding the real input to draw a fake cursor breaks all three.
 
 ## Deploy
 
-Static files in `public/`, served by Cloudflare Pages.
+Static files in `public/`, served by Cloudflare Pages. GitHub Actions deploys on
+every push to `main`; each pull request gets its own preview deployment on a
+`pr-N` branch, so you can look at a change before the live host moves.
 
-```bash
-npx wrangler pages deploy public --project-name=<your-project> --branch=main
-```
+`.github/workflows/deploy.yml` needs two repository secrets:
+
+| Secret | Value |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | API token with Account → Cloudflare Pages: Edit, scoped to the account |
+| `CLOUDFLARE_ACCOUNT_ID` | the Cloudflare account id |
+
+The workflow stamps the deployed commit into `<meta name="build-sha">`, so the
+live page says which commit it is serving.
 
 ## Licence
 
